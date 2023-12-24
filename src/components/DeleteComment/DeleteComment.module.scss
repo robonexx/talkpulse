@@ -1,0 +1,20 @@
+.delete {
+    position: relative;
+    display: flex;
+    align-items: center;
+    font-size: 0.75rem;
+  
+    button {
+      outline: none;
+      border: none;
+      background: transparent;
+      color: #dfdfdf;
+      transition: color 0.3s ease-in-out;
+  
+      &:hover {
+        cursor: pointer;
+        color: rgb(170, 107, 95);
+      }
+    }
+  }
+  

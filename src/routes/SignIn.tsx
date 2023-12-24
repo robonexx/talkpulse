@@ -1,6 +1,7 @@
 import {
   ActionFunctionArgs,
   Form,
+  Link,
   redirect,
   useActionData,
 } from 'react-router-dom';
@@ -11,7 +12,7 @@ import auth from "../lib/auth";
 import { ActionData } from "../types/types";
 
 export const action = async (args: ActionFunctionArgs) => {
-    const { request } = args;
+    const { request } = args;
 
     const formData = await request.formData();
 
@@ -75,7 +76,7 @@ const SignIn = () => {
       </Form>
       <div className={styles['register-link']}>
         <p>
-          Dont't have an account? Sign up now - <a href='#'>Register account</a>
+          Dont't have an account? Sign up now - <Link to='/sign-up'>Register account</Link>
         </p>
       </div>
     </div>

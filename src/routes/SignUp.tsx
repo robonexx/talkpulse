@@ -1,6 +1,7 @@
 import {
   ActionFunctionArgs,
   Form,
+  Link,
   redirect,
   useActionData,
 } from 'react-router-dom';
@@ -94,7 +95,7 @@ const SingUp = () => {
       </Form>
       <div className={styles['register-link']}>
         <p>
-          Already have an account? <a href='#'>Login</a>
+          Already have an account? <Link to='/sign-in'>Login</Link>
         </p>
       </div>
     </div>

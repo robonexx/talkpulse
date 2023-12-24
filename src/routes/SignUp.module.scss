@@ -18,11 +18,11 @@
   .form {
     width: 420px;
     background: transparent;
-    border: 2px solid rgba(255, 255, 255, 0.2);
+    border: 1px solid rgba(255, 255, 255, 0.2);
     backdrop-filter: blur(20px);
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
     color: #fff;
-    border-radius: 0.75rem;
+    border-radius: 5px;
     padding: 30px 40px;
 
     label {
@@ -35,8 +35,8 @@
       background: transparent;
       border: none;
       outline: none;
-      border: 2px solid rgba(255, 255, 255, 0.2);
-      border-radius: 2.75rem;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      border-radius: 5px;
       font-family: monospace;
       font-size: 1rem;
       color: #fff;

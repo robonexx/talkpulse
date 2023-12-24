@@ -9,7 +9,6 @@ interface PaginatorProps {
 
 const Pagination = (props: PaginatorProps) => {
    /*  const pages = Array.from(Array(props.totalPages).keys()).map((i) => i + 1); */
-    
     const pages = Array.from({length: props.totalPages}, (_, i) => i + 1)
 
   return (

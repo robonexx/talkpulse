@@ -85,10 +85,12 @@ const CreatePost = () => {
           placeholder='Feel free to express yourself'
           error={false}
         />
+        <div className={styles.buttons}>
         <button type='submit'>Create post</button>{' '}
         <button type='button' onClick={cancelCreate}>
           Cancel
-        </button>
+          </button>
+          </div>
       </Form>
     </div>
   );

@@ -95,7 +95,7 @@ const SinglePost = () => {
           </header>
           <div className={styles['post-info']}>
             {post.link ? (
-              <Link to={post.link} target="_blank" rel="noopener noreferrer">
+              <Link to={post.link} target='_blank' rel='noopener noreferrer'>
                 <h2>
                   {post.title}
                   <br />
@@ -121,6 +121,7 @@ const SinglePost = () => {
               <HiOutlineChatBubbleLeftRight onClick={handleShowComments} />
             </p>
           </footer>
+          {addAComment ? <CommentForm postId={post._id} /> : <div></div>}
           {showComments ? (
             <section className={styles['comments-list']}>
               {post.comments
@@ -133,17 +134,18 @@ const SinglePost = () => {
                 .map((comment) => (
                   <Comment
                     key={comment._id}
+                    commentId={comment._id}
                     body={comment.body}
                     author={comment?.author?.username}
                     createdAt={comment.createdAt}
+                    user={user}
+                    postId={post._id}
                   />
                 ))}
             </section>
           ) : (
             <div></div>
           )}
-         {/*  {addAComment ? <AddComment postId={post._id} /> : <div></div>} */}
-          {addAComment ? <CommentForm postId={post._id} /> : <div></div>}
         </article>
       )}
     </>

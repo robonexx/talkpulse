@@ -20,6 +20,21 @@ $borderRadius: 8px;
     margin-bottom: 10px;
     font-family: monospace;
 
+    div {
+      display: flex;
+      align-items: center;
+      .icon {
+        padding-right: 0.75rem;
+        color: #dfdfdf;
+
+        &:hover {
+          cursor: pointer;
+          color: #fff;
+          filter: drop-shadow(2px 2px 5px rgba(255,255,255,0225));
+        }
+      }
+    }   
+
     time {
       color: #888;
     }
