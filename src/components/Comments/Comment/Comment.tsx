@@ -1,10 +1,10 @@
 // Comment.tsx
 
 import { useState } from 'react';
-import {
+/* import {
   PiArrowFatLineUpFill,
   PiArrowFatLineDownDuotone,
-} from 'react-icons/pi';
+} from 'react-icons/pi'; */
 import { HiOutlineChatBubbleLeftRight, HiPencilSquare } from 'react-icons/hi2';
 
 import { timeAgo } from '../../../utils/timeAgo';
@@ -15,6 +15,7 @@ import Reply from '../Reply';
 
 import styles from './Comment.module.scss';
 import DeleteComment from '../../DeleteComment/DeleteComment';
+import CommentVotes from '../../Votes/CommentVotes';
 
 type ReplyTypes = {
   reply: string;
@@ -35,6 +36,7 @@ interface CommentProps {
   replies?: ReplyTypes[] | undefined;
   user: User | undefined;
   postId: string;
+  score: number;
 }
 
 const Comment: React.FC<CommentProps> = ({
@@ -44,6 +46,7 @@ const Comment: React.FC<CommentProps> = ({
   user,
   postId,
   commentId,
+  score
 }) => {
   const [showReplies, setShowReplies] = useState(false);
   const [isUpdateMode, setIsUpdateMode] = useState(false);
@@ -57,6 +60,8 @@ const Comment: React.FC<CommentProps> = ({
   const handleUpdateClick = () => {
     setIsUpdateMode((prev) => !prev);
   };
+
+  console.log(score)
 
   return (
     <div className={styles.comment}>
@@ -84,10 +89,11 @@ const Comment: React.FC<CommentProps> = ({
         <p className={styles.text}>{body}</p>
       )}
       <footer>
-        <PiArrowFatLineUpFill />
-        <span>12</span>
-        <PiArrowFatLineDownDuotone />
-        <span>5</span>
+      {commentId ? (
+          <CommentVotes commentId={commentId} postId={postId} score={score} />
+            ) : (
+              <div></div>
+            )}
         <span className={styles.reply}>reply </span>
         <span className={styles.icon} onClick={toggleReplies}>
           <HiOutlineChatBubbleLeftRight />

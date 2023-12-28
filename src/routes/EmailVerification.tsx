@@ -1,40 +1,54 @@
-import axios from 'axios';
 import { useState, useEffect } from 'react';
-import { Link, useNavigate, useParams } from 'react-router-dom';
+import { Link, useNavigate, useParams, redirect, ActionFunctionArgs } from 'react-router-dom';
+
+export const action = async (args: ActionFunctionArgs) => {
+  try {
+    const { username, token } = args.params;
+
+    const response = await fetch(`${import.meta.env.VITE_SERVER_URL}/verifyAccount/${username}/${token}`, {
+      method: 'post',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    });
+
+    if (!response.ok) {
+      const { message } = await response.json();
+      return { message };
+    }
+
+    return redirect('/');
+  } catch (error) {
+    console.error('Error verifying email:', error);
+    return { message: 'An error occurred while verifying your email' };
+  }
+};
 
 const EmailVerification: React.FC = () => {
-  const params = useParams<string>();
+  const params = useParams<{ username: string; token: string }>();
   const [isValid, setIsValid] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
   const navigate = useNavigate();
 
-  const verifyEmail = (username: string, token: string) => {
-    console.log(
-      `username ${username} + token: ${token}, just for testing purpose`
-    );
+  useEffect(() => {
+    const verifyEmail = async () => {
+      try {
+        const result = await action({ params: { ...params }, request: new Request('') });
 
-    console.log('usernameAndToken:', username, token)
-    axios
-      .post(
-        `${import.meta.env.VITE_SERVER_URL}/verifyAccount/${username}/${token}`
-      )
-      .then((resp) => {
-        if (resp.status === 200) {
-          setIsValid(true);
+        if ('message' in result) {
+          setError(result.message);
         } else {
-          setError('Could not verify your account: email or token is no longer valid');
+          setIsValid(true);
         }
-      })
-      .catch((error) => {
+      } catch (error) {
         console.error('Error verifying email:', error);
         setError('Could not verify your account: an error occurred');
-      });
-  };
+      }
+    };
 
-  useEffect(() => {
     if (params && params.username && params.token) {
-      verifyEmail(params.username, params.token);
+      verifyEmail();
     }
   }, [params]);
 

@@ -39,7 +39,7 @@ export const action = async (args: ActionFunctionArgs) => {
   return redirect(formData.get('returnTo')?.toString() || '/');
 };
 
-const Votes = ({ post }: { post: Post }) => {
+const PostVotes = ({ post }: { post: Post }) => {
   const location = useLocation();
 
   return (
@@ -73,4 +73,4 @@ const Votes = ({ post }: { post: Post }) => {
   );
 };
 
-export default Votes;
+export default PostVotes;

@@ -35,11 +35,6 @@ const PostItem = ({ post }: { post: Post }) => {
           </div>
         </div>
       )}
-      {/* {post && (
-        <div className={styles.link}>
-          <Link to={`/posts/${post._id}`}>View full post</Link>
-        </div>
-      )} */}
     </div>
   );
 };

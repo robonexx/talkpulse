@@ -8,6 +8,7 @@ export interface Comment {
         username: string
     },
     createdAt: string;
+    score: number;
 }
 
 export interface Post {

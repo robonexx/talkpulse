@@ -13,3 +13,8 @@ framer-motion
 react-icons
 
 TODO:
+Verification [x] - working on live site
+Add redirects to:
+comments:   []
+posts:      []
+delete:     []

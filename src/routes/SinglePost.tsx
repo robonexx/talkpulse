@@ -6,13 +6,13 @@ import { Post, User } from '../types/types';
 import Comment from '../components/Comments/Comment/Comment';
 /* import AddComment from '../components/AddComment/AddComment'; */
 import CommentForm from '../components/CommentForm/CommentForm';
-import Votes from '../components/Votes/Votes';
 import { timeAgo } from '../utils/timeAgo';
 import auth from '../lib/auth';
 import UpdatePost from '../routes/UpdatePost';
 import DeletePost from '../components/DeletePost/DeletePost';
 
 import styles from './SinglePost.module.scss';
+import PostVotes from '../components/Votes/PostVotes';
 
 type SinglePostLoaderData = {
   post: Post;
@@ -112,7 +112,10 @@ const SinglePost = () => {
             )}
           </div>
           <footer>
-            <Votes post={post} />
+            {/* 
+              MÅSTE FIXA SÅ JAG KAN SKICKA IN BÅDE POST OCH COMMENT IN I VOTES OCH I COMMENTS
+              */}
+            {post ? <PostVotes post={post} /> : <div></div>}
             <span className={styles.reply}>
               Add comment <HiPencilSquare onClick={handleAddAComment} />
             </span>
@@ -124,6 +127,9 @@ const SinglePost = () => {
           {addAComment ? <CommentForm postId={post._id} /> : <div></div>}
           {showComments ? (
             <section className={styles['comments-list']}>
+              {/* 
+              MÅSTE FIXA SÅ JAG KAN SKICKA IN BÅDE POST OCH COMMENT IN I VOTES OCH I COMMENTS
+              */}
               {post.comments
                 ?.slice()
                 .sort(
@@ -131,6 +137,7 @@ const SinglePost = () => {
                     new Date(b.createdAt).getTime() -
                     new Date(a.createdAt).getTime()
                 )
+
                 .map((comment) => (
                   <Comment
                     key={comment._id}
@@ -140,6 +147,7 @@ const SinglePost = () => {
                     createdAt={comment.createdAt}
                     user={user}
                     postId={post._id}
+                    score={comment.score}
                   />
                 ))}
             </section>
