@@ -1,7 +1,8 @@
 .comment-form {
   position: relative;
   margin: 2rem 0;
-  padding: 0.5rem;
+  background: black;
+  border-radius: 5px;
 
   h2 {
     font-size: 1.25rem;
@@ -12,7 +13,6 @@
     position: relative;
     width: 100%;
     height: 5rem;
-    margin: 0.75rem 0;
 
     textarea {
       width: 100%;
@@ -32,11 +32,13 @@
       }
     }
   }
-.buttons-container {
-  display: flex;
-  align-items: center;
-}
+  .buttons-container {
+    display: flex;
+    align-items: center;
+  }
   button {
+    margin-top: 0.5rem;
+    padding: 0.5rem 1.5rem;
     display: grid;
     place-content: center;
     position: relative;
@@ -49,8 +51,7 @@
     border-radius: 5px;
     font-family: monospace;
     font-size: 1rem;
-    color: #fff;
-    padding: 0.5rem 1.5rem;
+    color: #dfdfdf;
     transition: all 0.3s ease;
 
     @media (min-width: 768px) {
@@ -59,7 +60,8 @@
 
     &:hover {
       cursor: pointer;
-      background: rgba(255, 255, 255, 0.2);
+      color: #fff;
+      background: rgb(27, 27, 27);
     }
   }
 }

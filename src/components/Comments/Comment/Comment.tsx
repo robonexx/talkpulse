@@ -56,8 +56,6 @@ const Comment: React.FC<CommentProps> = ({
     setIsUpdateMode((prev) => !prev);
   };
 
-  console.log(score)
-
   return (
     <div className={styles.comment}>
       <header className={styles['comment-header']}>
@@ -109,7 +107,7 @@ export default Comment;
 
 const replies: ReplyTypes[] = [
   {
-    reply: 'Reply to the first comment.',
+    reply: 'Just mock reply comments.',
     author: { username: 'replyUser1' },
     createdAt: '2023-01-02',
     upvote: 5,
@@ -119,7 +117,7 @@ const replies: ReplyTypes[] = [
   },
 
   {
-    reply: 'An other reply to the first comment.',
+    reply: 'Future ideas for further development... ',
     author: { username: 'replyUser5' },
     createdAt: '2023-01-04',
     upvote: 25,
