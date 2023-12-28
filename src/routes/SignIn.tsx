@@ -79,6 +79,11 @@ const SignIn = () => {
           Dont't have an account? Sign up now - <Link to='/sign-up'>Register account</Link>
         </p>
       </div>
+      <div className={styles['register-link']}>
+        <p>
+          Forgot password?  - <Link to='/forgot-password'>Reset password</Link>
+        </p>
+      </div>
     </div>
   );
 };

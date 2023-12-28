@@ -18,7 +18,7 @@ export const action = async (args: ActionFunctionArgs) => {
   const username = formData.get('username');
   const password = formData.get('password');
   const email = formData.get('email');
-  const invite = formData.get('invite');
+ /*  const invite = formData.get('invite'); */
   const passwordConfirmation = formData.get('password_confirmation');
 
   if (password !== passwordConfirmation) {
@@ -30,7 +30,7 @@ export const action = async (args: ActionFunctionArgs) => {
       'Content-Type': 'application/json',
     },
     method: 'POST',
-    body: JSON.stringify({ username, password, email, invite }),
+    body: JSON.stringify({ username, password, email }),
   });
 
   if (!response.ok) {

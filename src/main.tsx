@@ -27,6 +27,10 @@ import { action as updateCommentAction } from './routes/UpdateComment.tsx';
 import { action as postVoteAction } from './components/Votes/PostVotes';
 import { action as commentVoteAction } from './components/Votes/CommentVotes';
 import EmailVerification from './routes/EmailVerification.tsx';
+import ForgotPassword, {
+  action as forgotPasswordAction,
+} from './routes/ForgotPassword.tsx';
+import ResetPassword, {action as resetPasswordAction} from './routes/ResetPassword.tsx';
 
 const router = createBrowserRouter([
   {
@@ -63,6 +67,16 @@ const router = createBrowserRouter([
       {
         path: 'verify-account/:username/:token',
         element: <EmailVerification />,
+      },
+      {
+        path: 'forgot-password',
+        action: forgotPasswordAction,
+        element: <ForgotPassword />,
+      },
+      {
+        path: 'reset-password/:email/:token',
+        action: resetPasswordAction,
+        element: <ResetPassword />,
       },
       {
         element: <RequireAuth />,
