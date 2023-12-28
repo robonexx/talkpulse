@@ -1,21 +1,16 @@
-// Comment.tsx
-
 import { useState } from 'react';
-/* import {
-  PiArrowFatLineUpFill,
-  PiArrowFatLineDownDuotone,
-} from 'react-icons/pi'; */
 import { HiOutlineChatBubbleLeftRight, HiPencilSquare } from 'react-icons/hi2';
 
 import { timeAgo } from '../../../utils/timeAgo';
 import auth from '../../../lib/auth';
 import { User } from '../../../types/types';
-import UpdateComment from '../../../routes/UpdateComment';
+import UpdateComment from '../../../routes/UpdateComment'
+import DeleteComment from '../../DeleteComment/DeleteComment';
+import CommentVotes from '../../Votes/CommentVotes';
+
 import Reply from '../Reply';
 
 import styles from './Comment.module.scss';
-import DeleteComment from '../../DeleteComment/DeleteComment';
-import CommentVotes from '../../Votes/CommentVotes';
 
 type ReplyTypes = {
   reply: string;

@@ -106,8 +106,10 @@ $borderRadius: 8px;
       font-size: 0.75rem;
       font-family: monospace;
 
-      .comments {
-        margin-left: 1rem;
+      .comments-text {
+        display: flex;
+        align-items: center;
+        margin-left: 2rem;
         color: #888;
       }
   
@@ -115,7 +117,7 @@ $borderRadius: 8px;
         margin: 0 0.5rem;
       }
       .reply {
-        margin: 0 0.5rem 0 1rem;
+        margin: 0 1rem 0 1rem;
         color: #888;
   
           &:hover {
@@ -126,5 +128,9 @@ $borderRadius: 8px;
   }
   .comments-list {
     margin: 1rem 0;
+
+    h2 {
+      margin: 1rem 0;
+    }
   }
 }
