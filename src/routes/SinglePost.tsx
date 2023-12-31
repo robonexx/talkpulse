@@ -2,14 +2,18 @@ import { useState } from 'react';
 import { Link, LoaderFunctionArgs, useLoaderData } from 'react-router-dom';
 import { HiPencilSquare } from 'react-icons/hi2';
 
+import auth from '../lib/auth';
+import { timeAgo } from '../utils/timeAgo';
 import { Post, User } from '../types/types';
+
+import ImageContainer from '../components/ImageContainer/ImageContainer';
+
 import Comment from '../components/Comments/Comment/Comment';
 import CommentForm from '../components/CommentForm/CommentForm';
-import { timeAgo } from '../utils/timeAgo';
-import auth from '../lib/auth';
-import UpdatePost from '../routes/UpdatePost';
 import DeletePost from '../components/DeletePost/DeletePost';
 import PostVotes from '../components/Votes/PostVotes';
+
+import UpdatePost from '../routes/UpdatePost';
 
 import styles from './SinglePost.module.scss';
 
@@ -103,7 +107,11 @@ const SinglePost = () => {
               </Link>
             ) : (
               <h2>{post.title}</h2>
-            )}
+              )}
+              {/* 
+              IMAGE WOULD GO HERE - IMAGE CONTAINER
+              */}
+               {post.image && <ImageContainer imageData={post.image} />}
             {post.body && (
               <section className={styles['post-body']}>
                 <p>{post.body}</p>

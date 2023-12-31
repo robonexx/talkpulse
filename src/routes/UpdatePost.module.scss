@@ -121,3 +121,26 @@
     }
   }
 }
+
+.image-container {
+  margin: 2rem 0;
+  position: relative;
+  width: 100%;
+  height: auto;
+  object-fit: cover;
+  object-position: center;
+
+  @media (min-width: 768px) {
+      margin: 2rem auto;
+      max-width: 40vw;
+  }
+
+  @media (min-width: 1200px) {
+      margin: 2rem auto;
+      max-width: 30vw;
+  }
+
+  img {
+      width: 100%;
+  }
+}

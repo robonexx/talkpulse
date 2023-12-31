@@ -8,6 +8,7 @@ import {
 import auth from '../lib/auth';
 import { ActionData } from '../types/types';
 import Input from '../components/Input';
+import { RiImageAddFill } from 'react-icons/ri';
 
 import styles from './CreatePost.module.scss';
 import TextArea from '../components/TextArea';
@@ -16,23 +17,34 @@ export const action = async (args: ActionFunctionArgs) => {
   try {
     const { request } = args;
     const formData = await request.formData();
-    const postData = Object.fromEntries(formData.entries());
+
+    // Append the image file to the FormData
+    const imageInput = formData.get('image') as FileList | null;
+
+    if (imageInput) {
+      const imageFile = imageInput[0];
+
+      // Log the type of imageFile
+      console.log('Type of imageFile:', typeof imageFile);
+    } else {
+      console.log('No image added to FormData.');
+    }
 
     const response = await fetch(import.meta.env.VITE_SERVER_URL + '/posts', {
       method: 'POST',
       headers: {
-        'Content-Type': 'application/json',
         Authorization: `Bearer ${auth.getJWT()}`,
       },
-      body: JSON.stringify(postData),
+      body: formData,
     });
 
     if (!response.ok) {
       const errorData = await response.json();
       console.error('Error creating post:', errorData);
-
       return { error: 'Failed to create post' };
     }
+
+    console.log('Post created successfully!');
     // Redirect on successful response
     return redirect('/');
   } catch (error) {
@@ -52,7 +64,11 @@ const CreatePost = () => {
   return (
     <div className={styles['create-post']}>
       <h2>Create post</h2>
-      <Form method='post' className={styles['form']}>
+      <Form
+        method='post'
+        className={styles['form']}
+        encType='multipart/form-data'
+      >
         {error && (
           <p>
             <b>Error: </b> {error.message}
@@ -78,6 +94,16 @@ const CreatePost = () => {
           /*  onChange={onChangeHandler} */
           required={false}
         />
+        <label htmlFor='image' className={styles['image-label']}>
+          <RiImageAddFill className={styles.icon} /> Image (optional)
+        </label>
+        <input
+          className={styles['input-image-wrapper']}
+          type='file'
+          name='image'
+          id='image'
+          accept='image/*'
+        />
         <label htmlFor='body'>Content</label>
         <TextArea
           name='body'
@@ -86,11 +112,11 @@ const CreatePost = () => {
           error={false}
         />
         <div className={styles.buttons}>
-        <button type='submit'>Create post</button>{' '}
-        <button type='button' onClick={cancelCreate}>
-          Cancel
+          <button type='submit'>Create post</button>{' '}
+          <button type='button' onClick={cancelCreate}>
+            Cancel
           </button>
-          </div>
+        </div>
       </Form>
     </div>
   );

@@ -14,6 +14,9 @@ react-icons
 
 TODO:
 Verification [x] - working on live site
+Password reset [x] - working on live site
+Votes post & comments [x] - working on live site
+
 Add redirects to:
 comments:   []
 posts:      []

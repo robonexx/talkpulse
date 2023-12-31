@@ -1,8 +1,8 @@
-import { useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useActionData, useParams } from 'react-router-dom';
 import { ActionFunctionArgs, Form, redirect } from 'react-router-dom';
 
 import styles from './ResetPassword.module.scss';
+import { ActionData } from '../types/types';
 
 export const action = async (args: ActionFunctionArgs) => {
   const { request } = args;
@@ -43,7 +43,8 @@ export const action = async (args: ActionFunctionArgs) => {
 const ResetPassword: React.FC = () => {
   const params = useParams<{ email: string; token: string }>();
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const [error, setError] = useState<string | null>(null);
+  /* const [error, setError] = useState<string | null>(null); */
+  const error = useActionData() as ActionData;
 
   return (
     <div className={styles['reset-password']}>
@@ -52,7 +53,11 @@ const ResetPassword: React.FC = () => {
         method='post'
         action={`/reset-password/${params.email}/${params.token}`}
       >
-        {error && <p>{error}</p>}
+       { error && (
+          <p>
+            <b>Error: </b> {error.message}
+          </p>
+        )}
         <label htmlFor='password'>New Password</label>
         <input type='password' name='password' id='password' required />
         <label htmlFor='confirmPassword'>Confirm Password</label>

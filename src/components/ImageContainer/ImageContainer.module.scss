@@ -1,0 +1,31 @@
+.image-container {
+    margin: 2rem auto;
+    position: relative;
+    width: 90%;
+    height: auto;
+    object-fit: cover;
+    object-position: center;
+
+    @media (min-width: 520px) {
+        margin: 2rem auto;
+        width: 75%;
+    }
+
+    @media (min-width: 768px) {
+        margin: 2rem auto;
+        width: 60%;
+    }
+
+    @media (min-width: 1200px) {
+        margin: 2rem auto;
+        width: 50%;
+    }
+
+   
+
+   
+
+    img {
+        width: 100%;
+    }
+}

@@ -15,7 +15,7 @@ export const action = async (args: ActionFunctionArgs) => {
     const { request, params } = args;
     const { postId, commentId } = params;
     const formData = await request.formData();
-    const commentBody = formData.get('body') as string; // Assuming the key is 'body'
+    const commentBody = formData.get('body') as string; 
 
     const response = await fetch(
       import.meta.env.VITE_SERVER_URL +

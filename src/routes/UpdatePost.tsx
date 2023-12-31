@@ -14,24 +14,39 @@ type UpdatePostLoaderData = {
   user: User;
 };
 
+
 export const action = async (args: ActionFunctionArgs) => {
   try {
     const { request, params } = args;
     const { postId } = params;
     const formData = await request.formData();
-    const postData = Object.fromEntries(formData.entries());
 
-    const mergedPostData = { ...formData, ...postData };
+    const imageInput = formData.get('image') as FileList | null;
+
+    if (imageInput) {
+      const imageFile = imageInput[0];
+
+      // Log the type of imageFile
+      console.log('Type of imageFile:', typeof imageFile);
+    } else {
+      console.log('No image added to FormData.');
+    }
+
+/*     const postData = {
+      title: formData.get('title') as string,
+      link: formData.get('link') as string,
+      body: formData.get('body') as string,
+      image: imageInput as File,
+    }; */
 
     const response = await fetch(
       import.meta.env.VITE_SERVER_URL + `/posts/${postId}/update`,
       {
         method: 'PUT',
         headers: {
-          'Content-Type': 'application/json',
           Authorization: `Bearer ${auth.getJWT()}`,
         },
-        body: JSON.stringify(mergedPostData),
+        body: formData,
       }
     );
 
@@ -59,6 +74,7 @@ const UpdatePost: React.FC<UpdatePostLoaderData> = ({ post, user }) => {
     title: post.title || '',
     link: post.link || '',
     body: post.body || '',
+    image: null as File | null,
   });
 
   useEffect(() => {
@@ -66,8 +82,22 @@ const UpdatePost: React.FC<UpdatePostLoaderData> = ({ post, user }) => {
       title: post.title || '',
       link: post.link || '',
       body: post.body || '',
+      image: null as File | null,
     });
   }, [post]);
+
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const files = e.target.files;
+    if (files && files.length > 0) {
+      setPostData({
+        ...postData,
+        image: files[0]
+      });
+    }
+  };
+  
+  // Use postData directly in the console.log statement
+  console.log(postData);
 
   return (
     <div className={styles['update-post']}>
@@ -76,6 +106,7 @@ const UpdatePost: React.FC<UpdatePostLoaderData> = ({ post, user }) => {
         method='PUT'
         action={`/posts/${post._id}/update`}
         className={styles['form']}
+        encType='multipart/form-data'
       >
         {error && (
           <p>
@@ -107,6 +138,17 @@ const UpdatePost: React.FC<UpdatePostLoaderData> = ({ post, user }) => {
             onChange={(e) => setPostData({ ...postData, link: e.target.value })}
           />
         </div>
+        <label htmlFor='image' className={styles['image-label']}>
+          Image (optional)
+        </label>
+        <input
+          className={styles['input-image-wrapper']}
+          type='file'
+          name='image'
+          id='image'
+          accept='image/*'
+          onChange={handleFileChange}
+        />
         <label htmlFor='body'>Content</label>
         <div className={styles['textarea-wrapper']}>
           <textarea

@@ -16,6 +16,7 @@ export interface Post {
     title: string;
     link?: string;
     body?: string;
+    image?: string;
     author: {
         _id: string;
         username: string
