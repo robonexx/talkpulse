@@ -111,6 +111,30 @@
         }
       }
     }
+
+    .image-container {
+      margin: 2rem 0;
+      position: relative;
+      width: 60vw;
+      height: auto;
+      object-fit: cover;
+      object-position: center;
+    
+      @media (min-width: 768px) {
+        margin: 2rem auto;
+        width: 25rem;
+    }
+    
+    @media (min-width: 1200px) {
+        margin: 2rem auto;
+        width: 20rem;
+    }
+    
+      img {
+          width: 100%;
+      }
+    }
+    
   }
 
   .register-link {
@@ -130,3 +154,4 @@
     }
   }
 }
+

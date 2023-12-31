@@ -1,3 +1,4 @@
+import {useState} from 'react'
 import {
   ActionFunctionArgs,
   useActionData,
@@ -18,13 +19,13 @@ export const action = async (args: ActionFunctionArgs) => {
     const { request } = args;
     const formData = await request.formData();
 
-    // Append the image file to the FormData
+    // Add / append the image file to the FormData
     const imageInput = formData.get('image') as FileList | null;
 
     if (imageInput) {
       const imageFile = imageInput[0];
 
-      // Log the type of imageFile
+      // checking image file type
       console.log('Type of imageFile:', typeof imageFile);
     } else {
       console.log('No image added to FormData.');
@@ -56,9 +57,23 @@ export const action = async (args: ActionFunctionArgs) => {
 const CreatePost = () => {
   const error = useActionData() as ActionData;
   const navigate = useNavigate();
+  const [imagePreview, setImagePreview] = useState<string | null>(null);
 
   const cancelCreate = () => {
     navigate('/');
+  };
+
+  const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (file) {
+      // Add preview functionality here
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        // Use reader.result for the preview
+        setImagePreview(reader.result as string);
+      };
+      reader.readAsDataURL(file);
+    }
   };
 
   return (
@@ -103,7 +118,14 @@ const CreatePost = () => {
           name='image'
           id='image'
           accept='image/*'
+          onChange={handleImageChange}
         />
+            {imagePreview && (
+          <div className={styles['image-container']}>
+            <p>Image Preview:</p>
+            <img src={imagePreview} alt='Image Preview' />
+          </div>
+        )}
         <label htmlFor='body'>Content</label>
         <TextArea
           name='body'

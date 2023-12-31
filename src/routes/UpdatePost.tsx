@@ -66,6 +66,7 @@ export const action = async (args: ActionFunctionArgs) => {
 
 const UpdatePost: React.FC<UpdatePostLoaderData> = ({ post, user }) => {
   const error = useActionData() as ActionData;
+  const [imagePreview, setImagePreview] = useState<string | null>(null);
 
   const isAuthor =
     auth.isSignedIn() && user && post.author?.username === user.username;
@@ -93,6 +94,13 @@ const UpdatePost: React.FC<UpdatePostLoaderData> = ({ post, user }) => {
         ...postData,
         image: files[0]
       });
+
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        // Use reader.result for the preview
+        setImagePreview(reader.result as string);
+      };
+      reader.readAsDataURL(files[0]);
     }
   };
   
@@ -149,6 +157,12 @@ const UpdatePost: React.FC<UpdatePostLoaderData> = ({ post, user }) => {
           accept='image/*'
           onChange={handleFileChange}
         />
+         {imagePreview && (
+          <div className={styles['image-container']}>
+            <p>Image Preview:</p>
+            <img src={imagePreview} alt='Image Preview' />
+          </div>
+        )}
         <label htmlFor='body'>Content</label>
         <div className={styles['textarea-wrapper']}>
           <textarea
