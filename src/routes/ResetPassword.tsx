@@ -52,21 +52,26 @@ const ResetPassword: React.FC = () => {
       <Form
         method='post'
         action={`/reset-password/${params.email}/${params.token}`}
+        className={styles.form}
       >
-       { error && (
+        {error && (
           <p>
             <b>Error: </b> {error.message}
           </p>
         )}
         <label htmlFor='password'>New Password</label>
-        <input type='password' name='password' id='password' required />
+        <div className={styles['input-wrapper']}>
+          <input type='password' name='password' id='password' required />
+        </div>
         <label htmlFor='confirmPassword'>Confirm Password</label>
-        <input
-          type='password'
-          name='confirmPassword'
-          id='confirmPassword'
-          required
-        />
+        <div className={styles['input-wrapper']}>
+          <input
+            type='password'
+            name='confirmPassword'
+            id='confirmPassword'
+            required
+          />
+        </div>
         <button type='submit'>Reset Password</button>
       </Form>
     </div>
