@@ -1,4 +1,4 @@
-# TALK PULSE 
+# TALK PULSE (on personal account)
 
 ### FRONTEND
 

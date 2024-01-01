@@ -1,16 +1,25 @@
 import { useState, useEffect } from 'react';
-import { Link, useNavigate, useParams, redirect, ActionFunctionArgs } from 'react-router-dom';
+import {
+  Link,
+  useNavigate,
+  useParams,
+  redirect,
+  ActionFunctionArgs,
+} from 'react-router-dom';
 
 export const action = async (args: ActionFunctionArgs) => {
   try {
     const { username, token } = args.params;
 
-    const response = await fetch(`${import.meta.env.VITE_SERVER_URL}/verifyAccount/${username}/${token}`, {
-      method: 'post',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    });
+    const response = await fetch(
+      `${import.meta.env.VITE_SERVER_URL}/verifyAccount/${username}/${token}`,
+      {
+        method: 'post',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      }
+    );
 
     if (!response.ok) {
       const { message } = await response.json();
@@ -34,7 +43,10 @@ const EmailVerification: React.FC = () => {
   useEffect(() => {
     const verifyEmail = async () => {
       try {
-        const result = await action({ params: { ...params }, request: new Request('') });
+        const result = await action({
+          params: { ...params },
+          request: new Request(''),
+        });
 
         if ('message' in result) {
           setError(result.message);

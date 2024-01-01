@@ -1,0 +1,63 @@
+
+  .bg {
+    position: fixed;
+    display: grid;
+    place-content: center;
+    top: 0;
+    left: 0;
+    z-index: 1000;
+    width: 100%;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.897);
+    backdrop-filter: blur(10px);
+  
+    animation: fadeIn 200ms forwards;
+  
+    .notification {
+      position: relative;
+      padding: 0.5rem 0.75rem;
+      background: black;
+      color: white;
+      border-radius: 5px;
+      transform: translate(-130%);
+      animation: slideIn 200ms forwards 200ms, slideOut 200ms forwards 1800ms;
+    }
+  
+    animation: fadeOut 200ms forwards 2000ms;
+  }
+  
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+  
+  @keyframes slideIn {
+    from {
+      transform: translateX(-130%);
+    }
+    to {
+      transform: translateX(0);
+    }
+  }
+  
+  @keyframes slideOut {
+    from {
+      transform: translateX(0);
+    }
+    to {
+      transform: translateX(-130%);
+    }
+  }
+  
+  @keyframes fadeOut {
+    from {
+      opacity: 1;
+    }
+    to {
+      opacity: 0;
+    }
+  }

@@ -1,5 +1,5 @@
 import { FC } from 'react';
-
+// for future use, if creating button components
 type ButtonProps = {
   title: string;
   type: string;

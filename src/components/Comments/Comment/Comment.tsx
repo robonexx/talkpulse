@@ -1,10 +1,4 @@
-// Comment.tsx
-
 import { useState } from 'react';
-/* import {
-  PiArrowFatLineUpFill,
-  PiArrowFatLineDownDuotone,
-} from 'react-icons/pi'; */
 import { HiPencilSquare } from 'react-icons/hi2';
 
 import { timeAgo } from '../../../utils/timeAgo';
@@ -118,7 +112,11 @@ const Comment: React.FC<CommentProps> = ({
 };
 
 export default Comment;
-/* 
+
+
+/*
+
+REPLY EXAMPLE FOR FUTURE USE
 const replies: ReplyTypes[] = [
   {
     reply: 'Reply to the first comment.',

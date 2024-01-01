@@ -3,6 +3,7 @@
   display: flex;
   align-items: center;
   font-size: 0.75rem;
+  padding: 0.25rem 0;
 
   button {
     outline: none;
@@ -12,13 +13,13 @@
     transition: color 0.3s ease-in-out;
 
     &:hover {
-      color: rgb(72, 102, 82);
+      color: rgb(209, 235, 217);
       cursor: pointer;
     }
   }
   .down-btn {
     &:hover {
-      color: rgb(170, 107, 95);
+      color: rgb(233, 201, 195);
     }
   }
 

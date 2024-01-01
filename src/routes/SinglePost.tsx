@@ -48,27 +48,16 @@ export const loader = async (args: LoaderFunctionArgs) => {
     userResponse.json(),
   ]);
 
-  /*  console.log(userData); */
-
   return { post: postData, user: userData };
 };
 
 const SinglePost = () => {
-  /*  const [showComments, setShowComments] = useState<boolean>(false); */
   const [addAComment, setAddAComment] = useState<boolean>(false);
   const [isUpdateMode, setIsUpdateMode] = useState<boolean>(false);
 
   const { post, user } = useLoaderData() as SinglePostLoaderData;
   const isAuthor =
     auth.isSignedIn() && user && post.author?.username === user.username;
-
-  /* const handleShowComments = () => {
-    setShowComments((prev) => !prev);
-  }; */
-
-/*   const handleAddAComment = () => {
-    setAddAComment((prev) => !prev);
-  }; */
 
   const handleCommentSubmit = () => {
     setAddAComment(false);
@@ -116,9 +105,6 @@ const SinglePost = () => {
             ) : (
               <h2>{post.title}</h2>
             )}
-            {/* 
-              IMAGE WOULD GO HERE - IMAGE CONTAINER
-              */}
             {post.image && <ImageContainer imageData={post.image} />}
             {post.body && (
               <section className={styles['post-body']}>
@@ -127,20 +113,23 @@ const SinglePost = () => {
             )}
           </div>
           <footer>
-            {/* 
-              MÅSTE FIXA SÅ JAG KAN SKICKA IN BÅDE POST OCH COMMENT IN I VOTES OCH I COMMENTS
-              */}
             {post ? <PostVotes post={post} /> : <div></div>}
             <span className={styles['add-comment']}>
               {addAComment ? (
                 <>
                   Close comment
-                    <HiPencilSquare onClick={() => setAddAComment(false)} className={styles.close} />
+                  <HiPencilSquare
+                    onClick={() => setAddAComment(false)}
+                    className={styles.close}
+                  />
                 </>
               ) : (
                 <>
                   Add comment{' '}
-                  <HiPencilSquare onClick={() => setAddAComment(true)} className={styles.open} />
+                  <HiPencilSquare
+                    onClick={() => setAddAComment(true)}
+                    className={styles.open}
+                  />
                 </>
               )}
             </span>
@@ -154,34 +143,30 @@ const SinglePost = () => {
           ) : (
             <div></div>
           )}
-          {/*  {showComments ? ( */}
-
           <section className={styles['comments-list']}>
-            <h2>Comments:</h2>
-            {post.comments
-              ?.slice()
-              .sort(
-                (a, b) =>
-                  new Date(b.createdAt).getTime() -
-                  new Date(a.createdAt).getTime()
-              )
-
-              .map((comment) => (
-                <Comment
-                  key={comment._id}
-                  commentId={comment._id}
-                  body={comment.body}
-                  author={comment?.author?.username}
-                  createdAt={comment.createdAt}
-                  user={user}
-                  postId={post._id}
-                  score={comment.score}
-                />
-              ))}
+          {post.comments && post.comments.length > 0 ? (
+              post.comments
+                .sort(
+                  (a, b) =>
+                    new Date(b.createdAt).getTime() -
+                    new Date(a.createdAt).getTime()
+                )
+                .map((comment) => (
+                  <Comment
+                    key={comment._id}
+                    commentId={comment._id}
+                    body={comment.body}
+                    author={comment?.author?.username}
+                    createdAt={comment.createdAt}
+                    user={user}
+                    postId={post._id}
+                    score={comment.score}
+                  />
+                ))
+            ) : (
+              <p>Be the first to comment 😊</p>
+            )}
           </section>
-          {/*  ) : (
-            <div></div>
-          )} */}
         </article>
       )}
     </>

@@ -26,20 +26,12 @@ const Input: FC<InputProps> = ({
 }) => {
   return (
     <div className={styles['input-wrapper']}>
-      {/*       <label
-        htmlFor={label}
-        className={styles.label}
-      >
-        {label}
-      </label> */}
       <input
         type={type}
-       /*  value={value} */
         name={name}
         id={id}
         placeholder={placeholder}
         disabled={disabled}
-       /*  onChange={onChange} */
         required={required}
       ></input>
       {error && <p className={styles.error}>This field can't be empty</p>}

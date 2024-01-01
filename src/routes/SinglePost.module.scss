@@ -4,7 +4,7 @@ $borderRadius: 8px;
 
 .post {
   position: relative;
-  margin: 0.725rem;
+  margin: 0.725rem 0;
   padding: 1rem;
   width: 100%;
   height: fit-content;
@@ -12,8 +12,7 @@ $borderRadius: 8px;
   display: flex;
   flex-direction: column;
   border-radius: 5px;
-  background-color: #121212;
-  color: white;
+  background-color: #0e0e0e;
   font-family: "Roboto", sans-serif;
   transition: background 0.4s ease-out;
 
@@ -23,7 +22,7 @@ $borderRadius: 8px;
   }
 
   &:hover {
-    background-color: #282828;
+    background-color: #111111;
     cursor: pointer;
   }
 
@@ -49,7 +48,7 @@ $borderRadius: 8px;
       align-items: center;
       .icon {
         padding-right: 0.75rem;
-        color: #dfdfdf;
+        color: $primaryColor;
 
         &:hover {
           cursor: pointer;
@@ -73,7 +72,7 @@ $borderRadius: 8px;
       padding: 1rem 0;
       text-decoration: none;
       h2 {
-        color: #f96716;
+        color: #d8d8d8;
         font-size: 1.25rem;
         font-weight: 800;
         span {
@@ -84,7 +83,7 @@ $borderRadius: 8px;
     }
 
     h2 {
-      color: #f96716;
+      color: #d8d8d8;
       font-size: 1.25rem;
       font-weight: 800;
     }
@@ -93,7 +92,7 @@ $borderRadius: 8px;
       padding: 1rem 0;
 
       p {
-        color: #dfd9d9;
+        color: #cacaca;
       }
     }
   }
@@ -129,11 +128,17 @@ $borderRadius: 8px;
       }
 
       .close {
-        color: tomato;
+        color: rgb(255, 255, 255);
       }
     }
   }
   .comments-list {
     margin: 1rem 0;
+
+    p {
+      font-size: 0.75rem;
+      color: #888;
+      width: 100%;
+    }
   }
 }

@@ -30,7 +30,6 @@ export const action = async (args: ActionFunctionArgs) => {
       return { message };
     }
 
-    // If you want to redirect to the reset password page, uncomment the following line
     return redirect(`/`);
   } catch (error) {
     console.error('Error during password reset request:', error);

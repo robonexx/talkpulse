@@ -14,7 +14,6 @@ type UpdatePostLoaderData = {
   user: User;
 };
 
-
 export const action = async (args: ActionFunctionArgs) => {
   try {
     const { request, params } = args;
@@ -31,13 +30,6 @@ export const action = async (args: ActionFunctionArgs) => {
     } else {
       console.log('No image added to FormData.');
     }
-
-/*     const postData = {
-      title: formData.get('title') as string,
-      link: formData.get('link') as string,
-      body: formData.get('body') as string,
-      image: imageInput as File,
-    }; */
 
     const response = await fetch(
       import.meta.env.VITE_SERVER_URL + `/posts/${postId}/update`,
@@ -64,7 +56,11 @@ export const action = async (args: ActionFunctionArgs) => {
   }
 };
 
-const UpdatePost: React.FC<UpdatePostLoaderData & { onClose: () => void }> = ({ post, user, onClose }) => {
+const UpdatePost: React.FC<UpdatePostLoaderData & { onClose: () => void }> = ({
+  post,
+  user,
+  onClose,
+}) => {
   const error = useActionData() as ActionData;
   const [imagePreview, setImagePreview] = useState<string | null>(null);
 
@@ -92,12 +88,11 @@ const UpdatePost: React.FC<UpdatePostLoaderData & { onClose: () => void }> = ({ 
     if (files && files.length > 0) {
       setPostData({
         ...postData,
-        image: files[0]
+        image: files[0],
       });
-
+      // check comments on create page
       const reader = new FileReader();
       reader.onloadend = () => {
-        // Use reader.result for the preview
         setImagePreview(reader.result as string);
       };
       reader.readAsDataURL(files[0]);
@@ -106,12 +101,9 @@ const UpdatePost: React.FC<UpdatePostLoaderData & { onClose: () => void }> = ({ 
 
   const handleClose = () => {
     setTimeout(() => {
-      onClose()
-    },1000)
-  }
-  
-  // Use postData directly in the console.log statement
-  console.log(postData);
+      onClose();
+    }, 1000);
+  };
 
   return (
     <div className={styles['update-post']}>
@@ -163,7 +155,7 @@ const UpdatePost: React.FC<UpdatePostLoaderData & { onClose: () => void }> = ({ 
           accept='image/*'
           onChange={handleFileChange}
         />
-         {imagePreview && (
+        {imagePreview && (
           <div className={styles['image-container']}>
             <p>Image Preview:</p>
             <img src={imagePreview} alt='Image Preview' />
@@ -181,7 +173,9 @@ const UpdatePost: React.FC<UpdatePostLoaderData & { onClose: () => void }> = ({ 
         </div>
         {isAuthor ? (
           <span className={styles.icon}>
-            <button type='submit' onClick={handleClose}>Update post</button>
+            <button type='submit' onClick={handleClose}>
+              Update post
+            </button>
           </span>
         ) : (
           <span className={styles.icon}>

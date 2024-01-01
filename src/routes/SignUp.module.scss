@@ -1,5 +1,5 @@
 .sign-up {
-  padding: 10vh 0;
+  padding: 10vh 2vw;
   width: 100%;
   display: grid;
   place-content: center;
@@ -16,7 +16,7 @@
   }
 
   .form {
-    width: 420px;
+    max-width: 420px;
     background: transparent;
     border: 1px solid rgba(255, 255, 255, 0.2);
     backdrop-filter: blur(20px);

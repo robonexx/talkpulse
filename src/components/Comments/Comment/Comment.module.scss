@@ -4,10 +4,10 @@ $borderRadius: 5px;
 
 .comment {
   background-color: $backgroundColor;
-  border: 1px solid #505050;
+  border: 1px solid #50505073;
   border-radius: $borderRadius;
   margin-bottom: 0.5rem;
-  padding: 1rem;
+  padding: 1rem 0.5rem 0rem 1rem;
 
   &:hover {
     transform: translateY(-1px);
@@ -20,9 +20,18 @@ $borderRadius: 5px;
     margin-bottom: 10px;
     font-family: monospace;
 
-    div {
+    p {
+      width: fit-content;
+    }
+
+    > div {
       display: flex;
       align-items: center;
+      width: 100%;
+
+      @media (min-width: 768px) {
+        width: 50%;
+      }
       .icon {
         padding-right: 0.75rem;
         color: #dfdfdf;
@@ -79,10 +88,6 @@ $borderRadius: 5px;
           color: $primaryColor;
           cursor: pointer;
       }
-    }
-
-    .icon {
-      
     }
   }
 }
