@@ -13,7 +13,7 @@ import CommentForm from '../components/CommentForm/CommentForm';
 import DeletePost from '../components/DeletePost/DeletePost';
 import PostVotes from '../components/Votes/PostVotes';
 
-import UpdatePost from '../routes/UpdatePost';
+import UpdatePost from './UpdatePost';
 
 import styles from './SinglePost.module.scss';
 
@@ -74,7 +74,7 @@ const SinglePost = () => {
   return (
     <>
       {isUpdateMode ? (
-        <UpdatePost post={post} user={user} onClose={handleCloseUpdateForm} />
+        <UpdatePost onClose={handleCloseUpdateForm} />
       ) : (
         <article className={styles.post}>
           <header className={styles['post-header']}>

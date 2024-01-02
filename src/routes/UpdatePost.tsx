@@ -1,17 +1,50 @@
 import { useEffect, useState } from 'react';
 import {
   ActionFunctionArgs,
-  Form,
-  redirect,
   useActionData,
+  LoaderFunctionArgs,
+  useLoaderData,
+  Form,
+  useNavigate,
 } from 'react-router-dom';
 import auth from '../lib/auth';
 import { Post, User, ActionData } from '../types/types';
+import Notification from '../components/notification/Notification';
+
 import styles from './UpdatePost.module.scss';
 
 type UpdatePostLoaderData = {
   post: Post;
   user: User;
+};
+
+export const loader = async (args: LoaderFunctionArgs) => {
+  const { postId } = args.params;
+
+  const postResponse = await fetch(
+    import.meta.env.VITE_SERVER_URL + '/posts/' + postId,
+    {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    }
+  );
+
+  const userResponse = await fetch(import.meta.env.VITE_SERVER_URL + '/user', {
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${auth.getJWT()}`,
+    },
+  });
+
+  const [postData, userData] = await Promise.all([
+    postResponse.json(),
+    userResponse.json(),
+  ]);
+
+  return { post: postData, user: userData };
 };
 
 export const action = async (args: ActionFunctionArgs) => {
@@ -25,7 +58,6 @@ export const action = async (args: ActionFunctionArgs) => {
     if (imageInput) {
       const imageFile = imageInput[0];
 
-      // Log the type of imageFile
       console.log('Type of imageFile:', typeof imageFile);
     } else {
       console.log('No image added to FormData.');
@@ -48,24 +80,22 @@ export const action = async (args: ActionFunctionArgs) => {
       return { error: 'Failed to update post' };
     }
 
-    // Redirect on successful update
-    return redirect(`/posts/${postId}`);
+    const responseData = await response.json();
+    console.log('Post updated successfully!', responseData);
+
+    return responseData;
   } catch (error) {
     console.error('Unexpected error during post update:', error);
     return { error: 'Unexpected error occurred' };
   }
 };
 
-const UpdatePost: React.FC<UpdatePostLoaderData & { onClose: () => void }> = ({
-  post,
-  user,
-  onClose,
-}) => {
-  const error = useActionData() as ActionData;
+const UpdatePost: React.FC<{ onClose: () => void }> = ({ onClose }) => {
+  const data = useActionData() as ActionData;
   const [imagePreview, setImagePreview] = useState<string | null>(null);
-
-  const isAuthor =
-    auth.isSignedIn() && user && post.author?.username === user.username;
+  const { post, user } = useLoaderData() as UpdatePostLoaderData;
+  const navigate = useNavigate();
+  auth.isSignedIn() && user && post.author?.username === user.username;
 
   const [postData, setPostData] = useState({
     title: post.title || '',
@@ -83,6 +113,10 @@ const UpdatePost: React.FC<UpdatePostLoaderData & { onClose: () => void }> = ({
     });
   }, [post]);
 
+  if (data) {
+    console.log(data);
+  }
+
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const files = e.target.files;
     if (files && files.length > 0) {
@@ -91,6 +125,7 @@ const UpdatePost: React.FC<UpdatePostLoaderData & { onClose: () => void }> = ({
         image: files[0],
       });
       // check comments on create page
+      // doing the same preview there
       const reader = new FileReader();
       reader.onloadend = () => {
         setImagePreview(reader.result as string);
@@ -98,6 +133,16 @@ const UpdatePost: React.FC<UpdatePostLoaderData & { onClose: () => void }> = ({
       reader.readAsDataURL(files[0]);
     }
   };
+
+  useEffect(() => {
+    if (data) {
+      const timeoutId = setTimeout(() => {
+        navigate(`/`);
+      }, 2000);
+
+      return () => clearTimeout(timeoutId);
+    }
+  }, [data, navigate]);
 
   const handleClose = () => {
     setTimeout(() => {
@@ -108,17 +153,13 @@ const UpdatePost: React.FC<UpdatePostLoaderData & { onClose: () => void }> = ({
   return (
     <div className={styles['update-post']}>
       <h2>Update post</h2>
+      {data && <Notification message={data.message} />}
       <Form
         method='PUT'
         action={`/posts/${post._id}/update`}
         className={styles['form']}
         encType='multipart/form-data'
       >
-        {error && (
-          <p>
-            <b>Error: </b> {error.message}
-          </p>
-        )}
         <label htmlFor='title'>Title</label>
         <div className={styles['input-wrapper']}>
           <input
@@ -171,19 +212,11 @@ const UpdatePost: React.FC<UpdatePostLoaderData & { onClose: () => void }> = ({
             onChange={(e) => setPostData({ ...postData, body: e.target.value })}
           />
         </div>
-        {isAuthor ? (
-          <span className={styles.icon}>
-            <button type='submit' onClick={handleClose}>
-              Update post
-            </button>
-          </span>
-        ) : (
-          <span className={styles.icon}>
-            <button type='button' disabled>
-              Not authorized
-            </button>
-          </span>
-        )}
+        <span className={styles.icon}>
+          <button type='submit' onClick={handleClose}>
+            Update post
+          </button>
+        </span>
       </Form>
     </div>
   );

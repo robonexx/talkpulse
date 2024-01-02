@@ -21,7 +21,8 @@ import SinglePost, {
 import { action as createCommentAction } from './components/CommentForm/CommentForm.tsx';
 import { action as deletePostAction } from './components/DeletePost/DeletePost';
 import { action as deleteCommentAction } from './components/DeleteComment/DeleteComment';
-import { action as updatePostAction } from './routes/UpdatePost';
+import UpdatePost from './routes/UpdatePost';
+import { action as updatePostAction, loader as updatePostLoader } from './routes/UpdatePost';
 import { action as updateCommentAction } from './routes/UpdateComment.tsx';
 import { action as postVoteAction } from './components/Votes/PostVotes';
 import { action as commentVoteAction } from './components/Votes/CommentVotes';
@@ -88,6 +89,10 @@ const router = createBrowserRouter([
           {
             path: '/posts/:postId/update',
             action: updatePostAction,
+            loader: updatePostLoader,
+            element: <UpdatePost onClose={function (): void {
+              throw new Error('Function not implemented.');
+            } } />,
           },
           {
             path: '/posts/:postId/delete',
