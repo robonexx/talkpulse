@@ -1,15 +1,14 @@
-/* import Comments from '../components/Comments';
-import Comment from '../components/Comments/Comment';
-import Reply from '../components/Comments/Reply'; */
+import { useState, useEffect } from 'react';
 import { Post } from '../types/types';
 import PostItem from '../components/Post/PostItem';
-/* import { mockPosts } from '../assets/mockData/mockPosts'; */
 import {
   LoaderFunctionArgs,
   useLoaderData,
   useSearchParams,
 } from 'react-router-dom';
 import Pagination from '../components/Pagination/Pagination';
+import auth from '../lib/auth';
+import Notification from '../components/notification/Notification';
 
 import styles from './Index.module.scss';
 
@@ -37,11 +36,20 @@ const Index = () => {
     totalPages: number;
     page: number;
   };
-
+  /* const [isUserSignedIn, setIsUserSignedIn] = useState<boolean>(auth.isSignedIn()); */
   const [searchParams, setSearchParams] = useSearchParams();
+
+  const isUserSignedIn = auth.isSignedIn()
 
   return (
     <div className={styles.Index}>
+      {isUserSignedIn ? (
+        <>
+         <div></div>
+        </>
+      ) : (
+        <Notification message="Please sign in to create posts." />
+      )}
       {data?.posts.map((post) => (
         <div key={post._id} className={styles['post-item-wrapper']}>
           <div className={styles.border}></div>
