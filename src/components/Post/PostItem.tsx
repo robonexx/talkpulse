@@ -3,6 +3,7 @@ import { Post } from '../../types/types';
 import styles from './Post.module.scss';
 import { timeAgo } from '../../utils/timeAgo';
 import PostVotes from '../Votes/PostVotes';
+import ImageContainer from '../ImageContainer/ImageContainer';
 
 const PostItem = ({ post }: { post: Post }) => {
   return (
@@ -13,6 +14,7 @@ const PostItem = ({ post }: { post: Post }) => {
         </p>
         <time dateTime={post.createdAt}>{timeAgo(post.createdAt)}</time>
       </header>
+      <div className={styles['post-container']}>
       {post && (
         <div className={styles['post-info']}>
           {post.link ? (
@@ -35,7 +37,9 @@ const PostItem = ({ post }: { post: Post }) => {
             <Link to={`/posts/${post._id}`}>View full post</Link>
           </div>
         </div>
-      )}
+        )}
+         {post.image && <ImageContainer imageData={post.image} />}
+      </div>
       <footer>{post ? <PostVotes post={post} /> : <div></div>}</footer>
     </div>
   );

@@ -12,7 +12,7 @@ const ImageContainer: React.FC<ImageContainerProps> = ({ imageData }) => {
 
   return (
     <div className={styles['image-container']}>
-      <img src={imageUrl} alt="Post Image" />
+      <img src={imageUrl} alt="Post Image" loading='lazy'/>
     </div>
   );
 };

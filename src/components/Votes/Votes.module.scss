@@ -1,9 +1,12 @@
 .votes {
   position: relative;
+  width: fit-content;
   display: flex;
   align-items: center;
   font-size: 0.75rem;
   padding: 0.25rem 0;
+  background: black;
+  border-radius: 5px;
 
   button {
     outline: none;
